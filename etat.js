@@ -1,5 +1,6 @@
-
-var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:42","msg": "Un court message ...." },{"from": "AF22111212232211122","date": "2016 01 03 10:15:31","msg": "Un autre message ...." }],"outbox":[{"to": "AF22111212232211122","date": "2016 01 12 20:15:42","msg": "Bla bla bla ...." }],"yp": {"AF22111212232211122": {"name": "Jean Fanchon"},"90221F212A4200001AA": {"name": "Bob"}}};
+var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:42","msg": "Un court message ...." },{"from": "AF22111212232211122","date": "2016 01 03 10:15:31","msg": "Un autre message ...." }],
+"outbox":[{"to": "AF22111212232211122","date": "2016 01 12 20:15:42","msg": "Bla bla bla ...." }],
+"yp": {"AF22111212232211122": {"name": "Jean Fanchon"},"90221F212A4200001AA": {"name": "Bob"}}};
 
 
 function afficheInbox()
@@ -31,6 +32,20 @@ function afficheYp()
 		contacts = contacts + "Adresse: " + cles[i] + "\nNom: " + etat.yp[cles[i]].name + "<br>"
   };
 	document.getElementById('Cible').innerHTML = contacts;
+}
+
+function entrerContact() {
+     document.getElementById('Cible').innerHTML =
+     `<FORM NAME="newAddress" action="" method="GET"><p>
+      Adresse:<br> <INPUT TYPE="text" NAME="inputadresse"><p>
+      Nom: <br><INPUT TYPE="text" NAME="inputnom" ><p>
+      <INPUT TYPE="button" value="Ajouter " onclick = "ajouterContact(this.form)">
+      </form>`;
+  }
+
+function ajouterContact(form){
+  var adresse=form.inputadresse.value;
+  var nom=form.inputnom.value;
 }
 
 function ajouteMessage(adresse,date,message)
