@@ -46,6 +46,7 @@ function entrerContact() {
 function ajouterContact(form){
   var adresse=form.inputadresse.value;
   var nom=form.inputnom.value;
+  ajouteAdresse(adresse, nom);
 }
 
 function ajouteMessage(adresse,date,message)
