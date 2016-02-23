@@ -17,12 +17,12 @@ function afficheOutbox()
 {
 	var envoies = "";
 	 for(var i=0;i<etat.outbox.length;i++) {
-		 console.log("Envoyé à : " + etat.outbox[i].to + "\nLe: " + etat.outbox[i].date + "\nMessage: " + etat.outbox[i].msg);
+		 console.log("Envoyé à: " + etat.outbox[i].to + "\nLe: " + etat.outbox[i].date + "\nMessage: " + etat.outbox[i].msg);
 		 envoies = envoies + "Envoyé à"+ etat.outbox[i].to + "\nLe: " + etat.outbox[i].date + "\nMessage: " + etat.outbox[i].msg + "<br>"
 	 };
 	 document.getElementById('Cible').innerHTML = envoies;
 }
- 
+
 function afficheYp()
 {
 	var contacts = "";
@@ -34,25 +34,29 @@ function afficheYp()
 	document.getElementById('Cible').innerHTML = contacts;
 }
 
+function entrerContact() {
+     document.getElementById('Cible').innerHTML =
+     `<FORM NAME="newAddress" action="" method="GET"><p>
+      Adresse:<br> <INPUT TYPE="text" NAME="inputadresse"><p>
+      Nom: <br><INPUT TYPE="text" NAME="inputnom" ><p>
+      <INPUT TYPE="button" value="Ajouter " onclick = "ajouterContact(this.form)">
+      </form>`;
+  }
+
 function ajouterContact(form){
-	var adresse=form.inputadresse.value;
-	var nom=form.inputnom.value;
-	var objNom = {};
-	objNom["name"] = nom;
-	etat.yp[adresse] = objNom;
+  var adresse=form.inputadresse.value;
+  var nom=form.inputnom.value;
+  ajouteAdresse(adresse, nom);
 }
 
-function ajouterMessage(form){
-	var adresse=form.toAdresse.value;
-	//var date=Date.now();
-	var date="";
-	var message=form.message.value;
-	var objMessage = {};
-	objMessage["to"] = adresse;
-	objMessage["date"] = date;
-	objMessage["msg"] = message;
-	etat.outbox.push(objMessage);
+function ajouteMessage(adresse,date,message)
+{
+	var nouvMessage = "{\"to\": " + "\"" + adresse + "\"" + ",\"date\": " + "\"" + date + "\"" + ",\"msg\": " + "\"" + message + "\"" + " }";
+	etat.outbox.push(nouvMessage);
 }
 
-
-
+function ajouteAdresse(adresse,nom)
+{
+	var nouvAdresse = "\"" + adresse + "\": {\"name\": \"" + nom + "\"}";
+	etat.yp.push(nouvAdresse);
+}
