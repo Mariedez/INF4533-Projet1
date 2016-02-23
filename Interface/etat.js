@@ -1,3 +1,63 @@
+<<<<<<< HEAD
+var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:42","msg": "Un court message ...." },{"from": "AF22111212232211122","date": "2016 01 03 10:15:31","msg": "Un autre message ...." }],
+"outbox":[{"to": "AF22111212232211122","date": "2016 01 12 20:15:42","msg": "Bla bla bla ...." }],
+"yp": {"AF22111212232211122": {"name": "Jean Fanchon"},"90221F212A4200001AA": {"name": "Bob"}}};
+
+
+function afficheInbox()
+{
+	var messages = "";
+	for(var i=0;i<etat.inbox.length;i++) {
+		 console.log("Recu de: " + etat.inbox[i].from + "\nLe: " + etat.inbox[i].date + "\nMessage: " + etat.inbox[i].msg);
+		  messages  = messages + "Recu de: " + etat.inbox[i].from + "\nLe: " + etat.inbox[i].date + "\nMessage: " + etat.inbox[i].msg + "<br>"
+	 };
+	 document.getElementById('Cible').innerHTML = messages;
+ }
+
+function afficheOutbox()
+{
+	var envoies = "";
+	 for(var i=0;i<etat.outbox.length;i++) {
+		 console.log("Envoyé à : " + etat.outbox[i].to + "\nLe: " + etat.outbox[i].date + "\nMessage: " + etat.outbox[i].msg);
+		 envoies = envoies + "Envoyé à"+ etat.outbox[i].to + "\nLe: " + etat.outbox[i].date + "\nMessage: " + etat.outbox[i].msg + "<br>"
+	 };
+	 document.getElementById('Cible').innerHTML = envoies;
+}
+ 
+function afficheYp()
+{
+	var contacts = "";
+	var cles = Object.keys(etat.yp);
+	for(var i=0;i<cles.length;i++){
+		console.log("Adresse: " + cles[i] + "\nNom: " + etat.yp[cles[i]].name);
+		contacts = contacts + "Adresse: " + cles[i] + "\nNom: " + etat.yp[cles[i]].name + "<br>"
+  };
+	document.getElementById('Cible').innerHTML = contacts;
+}
+
+function ajouterContact(form){
+	var adresse=form.inputadresse.value;
+	var nom=form.inputnom.value;
+	var objNom = {};
+	objNom["name"] = nom;
+	etat.yp[adresse] = objNom;
+}
+
+function ajouterMessage(form){
+	var adresse=form.toAdresse.value;
+	//var date=Date.now();
+	var date="";
+	var message=form.message.value;
+	var objMessage = {};
+	objMessage["to"] = adresse;
+	objMessage["date"] = date;
+	objMessage["msg"] = message;
+	etat.outbox.push(objMessage);
+}
+
+
+
+=======
 var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:42","msg": "Un court message ...." },{"from": "AF22111212232211122","date": "2016 01 03 10:15:31","msg": "Un autre message ...." }],
 "outbox":[{"to": "AF22111212232211122","date": "2016 01 12 20:15:42","msg": "Bla bla bla ...." }],
 "yp": {"AF22111212232211122": {"name": "Jean Fanchon"},"90221F212A4200001AA": {"name": "Bob"}}};
@@ -46,7 +106,6 @@ function entrerContact() {
 function ajouterContact(form){
   var adresse=form.inputadresse.value;
   var nom=form.inputnom.value;
-  ajouteAdresse(adresse, nom);
 }
 
 function ajouteMessage(adresse,date,message)
@@ -60,3 +119,4 @@ function ajouteAdresse(adresse,nom)
 	var nouvAdresse = "\"" + adresse + "\": {\"name\": \"" + nom + "\"}";
 	etat.yp.push(nouvAdresse);
 }
+>>>>>>> origin/master
