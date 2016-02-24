@@ -1,25 +1,40 @@
-
-
-
-
-
-
-
-
-
-.Tableau2{
-width:950px;
-height:440px;
-background-color:silver;
-float:right;
+.Entete{
+width:1007px; 
+height:35px;
+background-color:silver; 
+padding:35px;
 border:solid 1px black;
 }
 
 .Tableau1 {
-border:solid 1px black;
+width:135px;
+height:500px;
 background-color:silver;
-width:600px;
-padding:20px;
-height:400px;
-float="left";
+float:left;
+border:solid 1px black;
+padding:35px;
+}
+
+.Tableau2{
+width:800px;
+height:500px;
+background-color:silver;
+float:left;
+border:solid 1px black;
+padding:35px;
+}
+
+.Titre {
+font-family:Arial;
+font-size: 200%;
+}
+
+.TitreTableau2{
+font-family:Arial;
+font-size: 150%;
+}
+
+.Bouton {
+width: 135px;
+height: 25px;
 }
