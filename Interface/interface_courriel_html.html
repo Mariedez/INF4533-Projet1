@@ -17,29 +17,36 @@
 		</div>
 		<div class="Tableau2">
 			<p class="TitreTableau2" id="TitreCible"></p>
-			<p id="Cible"></p>
+			<p id="Cible"></p>	
 		</div>
+
 		<script type="text/javaScript" src="etat.js"></script>
 		<script type="text/javaScript">
 			function fAddText() {
-				document.getElementById('Cible').innerHTML = 
-				<form Name="newMessage" action="" method=get><p>
-				Adresse:<br> <input type="text" name="toAdresse"><p>
-				Message:<br> <TEXTAREA Name="message" rows =5 cols =30></TEXTAREA>
-				<br>
-				<input type="button" value="Envoyer " onclick="ajouterMessage(this.form)">   
-				<input type="RESET" value="Effacer  "></form>;
-			}
-		</script>
-		<script type="text/javaScript">
-			function entrerContact() {
+				document.getElementById('TitreCible').innerHTML = "Nouveau message";
 				document.getElementById('Cible').innerHTML =
-				<form name="newAddress" action="" method=get><p>
-				Adresse:<br> <input type="text" name="inputadresse"><p>
-				Nom: <br><input type="text" name="inputnom" ><p>
-				<input type="button" value="Ajouter " onclick = "ajouterContact(this.form)">
-				</form>;
+				`<form Name="newMessage" action="" method="get"><p>
+					Adresse:<br> <input type="text" name="toAdresse"><p>
+					Message:<br> <TEXTAREA Name="message" rows =5 cols =30></TEXTAREA>
+					<br>
+					<input type="button" value="Envoyer " onclick="ajouterMessage(this.form)">
+					<input type="RESET" value="Effacer  ">
+				</form>`;
 			}
 		</script>
+  <script type="text/javaScript">
+
+    function entrerContact() {
+		document.getElementById('TitreCible').innerHTML = "Nouveau contact";
+         document.getElementById('Cible').innerHTML =
+         `<form name="newAddress" action="" method="GET"><p>
+			Adresse:<br> <input type="text" name="inputadresse"><p>
+			Nom: <br><input type="text" name="inputnom" ><p>
+			<input type="button" value="Ajouter " onclick = "ajouterContact(this.form)">
+			<input type="RESET" value="Effacer  ">
+          </form>`;
+      }
+
+      </script>
 	</body>
 </html>

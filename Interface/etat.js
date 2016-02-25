@@ -40,22 +40,34 @@ function afficheYp()
 function ajouterContact(form){
 	var adresse=form.inputadresse.value;
 	var nom=form.inputnom.value;
-	var objNom = {};
-	objNom["name"] = nom;
-	etat.yp[adresse] = objNom;
+	if (nom=="" || adresse=="") {
+		alert("Vous devez indiquer l'adresse et le nom du destinataire");
+	} else { 
+		var objNom = {};
+		objNom["name"] = nom;
+		etat.yp[adresse] = objNom;
+		confirm("Contact ajouté");
+		form.reset();
+	}
 }
 
 //Fonction qui ajoute le nouveau message envoyés dans la variable etat.outbox
 function ajouterMessage(form){
 	var adresse=form.toAdresse.value;
-	//var date=Date.now();
-	var date="";
+	//var date = "";
+	var dateJour = new Date().toLocaleString();
 	var message=form.message.value;
-	var objMessage = {};
-	objMessage["to"] = adresse;
-	objMessage["date"] = date;
-	objMessage["msg"] = message;
-	etat.outbox.push(objMessage);
+	if(adresse==""){
+		alert("Vous devez indiquer l'adresse du destinataire");
+	} else {
+		var objMessage = {};
+		objMessage["to"] = adresse;
+		objMessage["date"] = dateJour;
+		objMessage["msg"] = message;
+		etat.outbox.push(objMessage);
+		confirm("Message envoyé");
+		form.reset();
+	}
 }
 
 
