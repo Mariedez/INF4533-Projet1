@@ -5,9 +5,9 @@ var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:4
 //Fonction qui affiche la liste des messages reçus dans la fenêtre 'cible'
 function afficheInbox()
 {
-	var messages = "";
+	var messages = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Destinateur</th><th>Date</th></tr>';
 	for(var i=0;i<etat.inbox.length;i++) {
-		  messages  = messages + "Recu de: " + etat.inbox[i].from + " Le: " + etat.inbox[i].date + "<br>Message: " + etat.inbox[i].msg + "<br><br>"
+		  messages  = messages + "<tr><td>" + etat.inbox[i].from + "</td><td>" + etat.inbox[i].date + "</td></tr><tr><td colspan='2'>" + etat.inbox[i].msg + "</td></tr>"
 	};
 	document.getElementById('TitreCible').innerHTML = "Boite de réception";
 	document.getElementById('Cible').innerHTML = messages;
@@ -16,21 +16,21 @@ function afficheInbox()
 //Fonction qui affiche la liste des messages envoyés dans la fenêtre 'cible'
 function afficheOutbox()
 {
-	var envoies = "";
+	var envoies = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Destinataire</th><th>Date</th></tr>';
 	 for(var i=0;i<etat.outbox.length;i++) {
-		 envoies = envoies + "Envoyé à: "+ etat.outbox[i].to + " Le: " + etat.outbox[i].date + "<br>Message: " + etat.outbox[i].msg + "<br><br>"
+		 envoies = envoies + "<tr><td>"+ etat.outbox[i].to + "</td><td>" + etat.outbox[i].date + "</td></tr><tr><td colspan='2'>" + etat.outbox[i].msg + "</td></tr>"
 	 };
 	 document.getElementById('TitreCible').innerHTML = "Messages envoyés";
 	 document.getElementById('Cible').innerHTML = envoies;
 }
- 
+
 //Fonction qui affiche la liste des contacts dans la fenêtre 'cible'
 function afficheYp()
 {
-	var contacts = "";
+	var contacts = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Adresse</th><th>Nom</th></tr>';
 	var cles = Object.keys(etat.yp);
 	for(var i=0;i<cles.length;i++){
-		contacts = contacts + "Adresse: " + cles[i] + "<br>Nom: " + etat.yp[cles[i]].name + "<br><br>"
+		contacts = contacts + "<tr><td>" + cles[i] + "</td><td>" + etat.yp[cles[i]].name + "</td></tr>"
 	};
 	document.getElementById('TitreCible').innerHTML = "Liste des contacts";
 	document.getElementById('Cible').innerHTML = contacts;
@@ -42,7 +42,7 @@ function ajouterContact(form){
 	var nom=form.inputnom.value;
 	if (nom=="" || adresse=="") {
 		alert("Vous devez indiquer l'adresse et le nom du destinataire");
-	} else { 
+	} else {
 		var objNom = {};
 		objNom["name"] = nom;
 		etat.yp[adresse] = objNom;
@@ -69,6 +69,3 @@ function ajouterMessage(form){
 		form.reset();
 	}
 }
-
-
-
