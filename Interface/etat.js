@@ -5,37 +5,37 @@ var etat = {"inbox": [{"from": "AF22111212232211122","date": "2015 12 28 20:15:4
 //Fonction qui affiche la liste des messages reçus dans la fenêtre 'cible'
 function afficheInbox()
 {
-	var messages = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Envoyé Par</th><th>Date</th></tr>';
+	var messages = '<div class="Contenant"><table><tr><th>Envoyé Par</th><th>Date</th></tr>';
 	for(var i=0;i<etat.inbox.length;i++) {
 		var recuDe = etat.yp[etat.inbox[i].from].name
 		  messages  = messages + "<tr><td>" + recuDe + "</td><td>" + etat.inbox[i].date + "</td></tr><tr><td colspan='2'>" + etat.inbox[i].msg + "</td></tr>"
 	};
 	document.getElementById('TitreCible').innerHTML = "Boîte de réception";
-	document.getElementById('Cible').innerHTML = messages;
+	document.getElementById('Cible').innerHTML = messages + "</table></div>";
  }
 
 //Fonction qui affiche la liste des messages envoyés dans la fenêtre 'cible'
 function afficheOutbox()
 {
-	var envoies = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Destinataire</th><th>Date</th></tr>';
+	var envoies = '<div class="Contenant"><table ><tr><th>Destinataire</th><th>Date</th></tr>';
 	 for(var i=0;i<etat.outbox.length;i++) {
 		 var destinataire = etat.yp[etat.outbox[i].to].name
 		 envoies = envoies + "<tr><td>"+ destinataire + "</td><td>" + etat.outbox[i].date + "</td></tr><tr><td colspan='2'>" + etat.outbox[i].msg + "</td></tr>"
 	 };
 	 document.getElementById('TitreCible').innerHTML = "Messages envoyés";
-	 document.getElementById('Cible').innerHTML = envoies;
+	 document.getElementById('Cible').innerHTML = envoies + "</table></div>";
 }
 
 //Fonction qui affiche la liste des contacts dans la fenêtre 'cible'
 function afficheYp()
 {
-	var contacts = '<div style="height: 80%; width: 90%; overflow: auto;"><table border="1" width="100%" ><tr><th>Adresse</th><th>Nom</th></tr>';
+	var contacts = '<div class=Contenant><table><tr><th>Adresse</th><th>Nom</th></tr>';
 	var cles = Object.keys(etat.yp);
 	for(var i=0;i<cles.length;i++){
 		contacts = contacts + "<tr><td>" + cles[i] + "</td><td>" + etat.yp[cles[i]].name + "</td></tr>"
 	};
 	document.getElementById('TitreCible').innerHTML = "Liste des contacts";
-	document.getElementById('Cible').innerHTML = contacts;
+	document.getElementById('Cible').innerHTML = contacts + "</table></div>";
 }
 
 //Fonction qui ajoute le nouveau contact dans la variable etat.yp

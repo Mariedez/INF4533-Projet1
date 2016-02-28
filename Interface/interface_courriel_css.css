@@ -1,7 +1,7 @@
 .Entete{
-width:1007px; 
+width:1007px;
 height:35px;
-background-color:silver; 
+background-color:silver;
 padding:35px;
 border:solid 1px black;
 }
@@ -37,4 +37,17 @@ font-size: 150%;
 .Bouton {
 width: 135px;
 height: 25px;
+}
+
+.Contenant {
+  height: 450px;
+  width: 100%;
+  overflow: auto;
+}
+
+.Contenant table {
+  width: 100%;
+}
+.Contenant table, th, td {
+   border: 1px solid black;
 }
