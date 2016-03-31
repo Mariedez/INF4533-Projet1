@@ -1,0 +1,13 @@
+extends courrielTemplate
+
+block content
+      form(method='post', action='/connexion')
+        div
+          p(style='color:red;')= erreur
+          label(for='usrnm') Nom d'utilisateur:
+          input#usrnm(type='text', name='username', placeholder='Username')
+          br
+          label(for='pswd') Mot de passe:
+          input#pswd(type='password', name='password', placeholder='Password')
+          br
+          input(type='submit', data-inline='true', value='Connexion')
