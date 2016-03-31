@@ -1,4 +1,4 @@
-extends layout
+extends courrielTemplate
 
 block ressources
 	script(src='javascripts/jquery-2.2.1.min.js')
@@ -10,9 +10,9 @@ block ressources
 	meta(name='cleA', content= message.cleA)
 block content
 	#lecture-message
-		h2= message.sujet
 		hr
-		p#message-de= message.de
-		p#message-date= message.date
+		p#message-de= 'De: ' + message.de
+		p#message-a= 'À: ' + message.a
+		p#message-date= 'Date envoi: ' + message.date
+		hr
 		p#message-body= message.body
-		

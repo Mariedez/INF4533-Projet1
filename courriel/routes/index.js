@@ -1,24 +1,39 @@
 var express = require('express');
 var router = express.Router();
+var sqlite3 = require('sqlite3').verbose();
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-var msg = {
-	sujet: "Bonjour",
-	cleDe: "Htwu4BtMecG0Tiw0vvbJ7M8drkOgI1IKKLxuQzZYZBrrJJqL7sBwBscqWkCOIpoeqCcPVm69TyVjVI6xpUeBrfrPYePOrcdF+ME7/pT9ATbUCZHXYbQNfZkHHWuHlL8Q7U1xlTm0R+FhUc67a1JceT7P7TzXjnhLRTjCLb57gVA=",
-	cleA: "Htwu4BtMecG0Tiw0vvbJ7M8drkOgI1IKKLxuQzZYZBrrJJqL7sBwBscqWkCOIpoeqCcPVm69TyVjVI6xpUeBrfrPYePOrcdF+ME7/pT9ATbUCZHXYbQNfZkHHWuHlL8Q7U1xlTm0R+FhUc67a1JceT7P7TzXjnhLRTjCLb57gVA=",
-	body: "IpvguB4YY8MPJ6JSFGgur9mpjTbOEn2roBQH",
-	de: "Vincent Emond",
-	a: "Vincent Emond",
-	date: "2016/03/30"
-};
+var msg = {};
 
 /* GET home page. */
 router.get('/message', function(req, res, next) {
-  res.render('message', { message: msg });
+
+	var db = new sqlite3.Database('../database/Courriel.db');
+	
+	db.serialize(function() {
+		
+	  db.get('select dateEnvoi, cleSymDe, cleSymA, message_de, message_a, texte from vue_message where id_message = 5', function(err, row) {
+
+			msg.cleDe = row.cleSymDe;
+			msg.cleA = row.cleSymA;
+			msg.body = row.texte;
+			msg.de = row.message_de;
+			msg.a = row.message_a;
+			msg.date = row.dateEnvoi;
+			
+			db.close();
+			
+			res.render('message', { message: msg, titre: 'Message reçu' });
+	  });		
+	});
+	
+	
 });
 
 module.exports = router;
