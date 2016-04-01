@@ -5,7 +5,7 @@ var sqlite3 = require('sqlite3').verbose();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.redirect('/login');
 });
 
 var msg = {};
@@ -39,6 +39,7 @@ router.get('/message', requireLogin, function(req, res, next) {
 router.post('/connexion', function(req, res, next) {
 	
 	var db = new sqlite3.Database('../database/Courriel.db');
+	var sess = req.session;
 	
 	db.serialize(function() {
 		
@@ -52,8 +53,7 @@ router.post('/connexion', function(req, res, next) {
 			else
 			{
 				console.log('connexion ok');
-				//cookie de 30 minutes
-				res.cookie('user', row.ClePublique, { httpOnly: true }); 
+				sess.user = row.ClePublique;
 				res.redirect('/message');
 			}
 			
@@ -70,12 +70,15 @@ router.get('/login', function(req, res, next) {
 
 function requireLogin(req, res, next)
 {
-	if (req.cookies && req.cookies.user) 
+	
+	var sess = req.session;
+	
+  if (sess.user) 
 	{
 		var db = new sqlite3.Database('../database/Courriel.db');
 		
 		db.serialize(function() {
-			db.get("select nom from utilisateurs where clePublique = ?", req.cookies.user, function(err, row) {
+			db.get("select nom from utilisateurs where clePublique = ?", sess.user, function(err, row) {
 
 					db.close();
 			
