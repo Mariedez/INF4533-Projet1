@@ -11,13 +11,14 @@ router.get('/', function(req, res, next) {
 var msg = {};
 
 /* Route pour voir un message */
-router.get('/message', requireLogin, function(req, res, next) {
+router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
 
 	var db = new sqlite3.Database('../database/Courriel.db');
+	var id = getParameterByName("id", req.url);
 	
 	db.serialize(function() {
 		
-	  db.get('select dateEnvoi, cleSymDe, cleSymA, message_de, message_a, texte from vue_message where id_message = 5', function(err, row) {
+	  db.get('select dateEnvoi, cleSymDe, cleSymA, message_de, message_a, texte from vue_message where id_message = ?',id, function(err, row) {
 
 			msg.cleDe = row.cleSymDe;
 			msg.cleA = row.cleSymA;
@@ -31,8 +32,13 @@ router.get('/message', requireLogin, function(req, res, next) {
 			res.render('message', { message: msg, titre: 'Message reçu' });
 	  });		
 	});
-	
-	
+});
+
+/* Route pour écrire un message. */
+router.get('/nouveauMessage', requireLogin, function(req, res, next) {
+  getContactsForUser(req.session.user, function(data) { 
+	res.render('nouveauMessage', { titre: 'Nouveau message', contacts: data });
+  });
 });
 
 /* Route pour se connecter. */
@@ -40,24 +46,36 @@ router.post('/connexion', function(req, res, next) {
 	
 	var db = new sqlite3.Database('../database/Courriel.db');
 	var sess = req.session;
+	var ref = req.headers['referer'];
 	
 	db.serialize(function() {
 		
 	  db.get("select nom, clePublique from utilisateurs where nom = ? and password = ?", req.body.username, req.body.password, function(err, row) {
 
+			db.close();
+	  
 			if (row == undefined)
 			{
-				console.log('Mauvais username ou password');
-				res.render('login', { titre: 'Connexion', erreur: 'Mauvais username ou password' })
+				res.render('login', { titre: 'Connexion', erreur: "Mauvais nom d'utilisateur ou mot de passe." })
 			}
 			else
 			{
 				console.log('connexion ok');
 				sess.user = row.ClePublique;
-				res.redirect('/message');
+				res.cookie('moiCle', row.ClePublique); 
+				res.cookie('moi', row.Nom);
+				
+				var rURL = getParameterByName('r', ref);
+				
+				if (rURL)
+				{
+					res.redirect('/' + rURL);
+				}
+				else
+				{
+					res.redirect('/message');
+				}	
 			}
-			
-			db.close();
 	  });		
 	});
 	
@@ -68,10 +86,44 @@ router.get('/login', function(req, res, next) {
   res.render('login', { titre: 'Connexion' });
 });
 
+/* Sauvegarder courriel */
+router.post('/saveMessage', requireLogin, function(req, res, next) {
+	var msg = req.body
+	var now = new Date();
+	now = formatDate(now);
+	
+
+	
+	var db = new sqlite3.Database('../database/Courriel.db');
+	
+	db.serialize(function() {
+		
+	  db.run('INSERT INTO messages (CleDe, CleA, DateEnvoi, Texte, CleSymDe, CleSymA) values (?, ?, ?, ?, ?, ?)', msg.cleDe, msg.cleA, now, msg.body, msg.cleSymDe, msg.cleSymA , function(err) {
+
+			db.close();
+	  
+			if (err)
+			{
+				console.log(err);
+				res.sendStatus(500);
+			}
+			else
+			{
+				res.sendStatus(200);
+			}
+			
+			
+	  });		
+	});
+	
+	
+});
+
 function requireLogin(req, res, next)
 {
 	
 	var sess = req.session;
+	var redURL = req.url.substr(1, req.url.length - 1);
 	
   if (sess.user) 
 	{
@@ -84,7 +136,7 @@ function requireLogin(req, res, next)
 			
 					if (row == undefined)
 					{
-						res.redirect('/login');
+						res.redirect('/login?r=' + redURL);
 					}
 					else
 					{
@@ -97,8 +149,73 @@ function requireLogin(req, res, next)
   } 
   else 
   {
-    res.redirect('/login');
+    res.redirect('/login?r=' + redURL);
   }
+}
+
+function getContactsForUser(userKey, callback)
+{
+	var db = new sqlite3.Database('../database/Courriel.db');
+	
+	if (!userKey)
+		return false;
+	
+	db.serialize(function() {
+		
+	  db.all("select cleContact, contact_nom from liste_contacts where cleUtilisateur = ?", userKey, function(err, rows) {
+			db.close();
+			console.log(rows);
+			callback(rows);
+	  });		
+	});
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+//S'assure que le message concerne l'utilisateur connecté
+function isValidMessage(req, res, next)
+{
+	var id = getParameterByName("id", req.url);
+	var cle = req.session.user;
+	
+	if (!id || !cle)
+		res.sendStatus(404);
+	else
+	{
+		var db = new sqlite3.Database('../database/Courriel.db');
+		db.serialize(function() {
+			db.get("select texte from messages where id_message = ? and (CleDe = ? or CleA = ?)", id, cle, cle, function(err, row) {
+				db.close();
+				if (row)
+					next();
+				else
+					res.sendStatus(404);
+			});		
+		});
+	}
+}
+
+function formatDate(d)
+{
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var day = d.getDate();
+	
+	if (month.toString().length == 1)
+		month = "0" + month;
+	
+	if (day.toString().length == 1)
+		day = "0" + day;
+	
+	return year + "-" + month + "-" + day;
 }
 
 module.exports = router;

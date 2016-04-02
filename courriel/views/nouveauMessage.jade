@@ -1,0 +1,19 @@
+extends courrielTemplate
+block ressources
+	script(src='javascripts/jquery-2.2.1.min.js')
+	script(src='/javascripts/AES.js')
+	script(src='/javascripts/jsencrypt.js')
+	script(src='/javascripts/chiffrement.js')
+	script(src='/javascripts/nouveauMessage.js')
+block content
+	#ecriture-message
+		label(for='txtTo') A: 
+		br
+		select#selectTo
+			each val in contacts
+				option(value=val.cleContact)= val.contact_nom
+		span#error-to
+		hr
+		textarea#txtMsg(rows='20')
+		br
+		button#btnSend Envoyer
