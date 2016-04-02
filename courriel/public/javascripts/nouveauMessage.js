@@ -26,7 +26,7 @@ function envoyerMessage()
 	msg.cleSymA = cleSymCrypteDesti;
 	
 	$.ajax({ type:'post', 
-				url: 'http://localhost:8000/saveMessage', 
+				url: 'http://localhost:3000/saveMessage', 
 				contentType: 'application/json', 
 				data: JSON.stringify(msg),
 				statusCode: { 500: function() {alert("Une erreur s'est produite lors de l'envoi du message.");}, 200: function() {alert("Message envoyé avec succès!");} } 

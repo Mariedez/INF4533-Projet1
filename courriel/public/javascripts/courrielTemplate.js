@@ -1,6 +1,6 @@
 function nouvMessage() 
 {
-	window.location = "http://localhost:8000/nouveauMessage";
+	window.location = "http://localhost:3000/nouveauMessage";
 }
 
 function afficheInbox()
