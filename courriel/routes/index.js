@@ -83,6 +83,7 @@ router.post('/connexion', function(req, res, next) {
 
 /* Page de login. */
 router.get('/login', function(req, res, next) {
+	console.log(__dirname);
   res.render('login', { titre: 'Connexion' });
 });
 
