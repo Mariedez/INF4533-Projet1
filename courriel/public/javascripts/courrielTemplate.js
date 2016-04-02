@@ -5,20 +5,15 @@ function nouvMessage()
 
 function afficheInbox()
 {
-	
+	window.location = "http://localhost:3000/inbox";
 }
 
 function afficheOutbox()
 {
-	
+	window.location = "http://localhost:3000/outbox";
 }
 
 function afficheYp()
 {
-	
-}
-
-function entrerContact()
-{
-	
+	window.location = "http://localhost:3000/contacts";
 }
