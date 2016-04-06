@@ -1,28 +1,38 @@
+html {
+	font-family:Arial;
+}
 .Entete{
-	width:707px;
+	width:711px;
 	height:35px;
-	background-color:silver;
 	padding:35px;
-	border:solid 1px black;
+	border-style: groove;
+	border-color: gray;
+	background-color:gray;
+	color: white;
+	box-shadow: 5px 5px 5px gray;
+	text-shadow: 2px 1px black;
 }
 
 .Tableau1 {
 	width:135px;
 	height:500px;
-	background-color:silver;
-	float:left;
-	border:solid 1px black;
 	padding:35px;
+	float:left;
+	border-style: groove;
+	border-color: gray;
+	background-color:silver;
+	box-shadow: 5px 5px 5px gray;
 }
 
 .Tableau2{
 	width:500px;
 	height:500px;
-	background-color:silver;
-	float:left;
-	border:solid 1px black;
 	padding:35px;
-	font-family:Arial;
+	background-color:rgb(233,233,233);
+	float:left;
+	border-style: groove;
+	border-color: gray;
+	box-shadow: 5px 5px 5px gray;
 }
 
 .Titre {
@@ -44,22 +54,20 @@
   overflow: auto;
 }
 
-.Contenant table {
-  width: 100%;
-}
-
-.contenant table th {
-	font-weight: bold;
-}
-.Contenant table, th, td {
-   border: 1px solid black;
+table {
+  width: 200px;
+  border-style: groove;
+  border-color: gray;
+  background-color: white;
 }
 
 .TextBox{
   width:270px;
+
 }
 .TextBox option{
   width:270px;
+
 }
 #mes {
 	font-style: italic;

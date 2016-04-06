@@ -90,7 +90,7 @@ router.get('/login', function(req, res, next) {
 router.get('/contacts', requireLogin, function(req,res,next) {
 	var db = new sqlite3.Database('../database/Courriel.db');
 	getContactsForUser(req.session.user, function(data) { 
-	res.render('contacts', { titre: 'Liste des contacts', contacts: data, utilisateurs });
+	res.render('contacts', { titre: 'Liste des contacts', contacts: data });
   });
 });
 
