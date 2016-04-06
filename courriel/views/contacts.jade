@@ -1,0 +1,21 @@
+extends courrielTemplate
+block ressources
+    script(src='javascripts/jquery-2.2.1.min.js')
+    script(src='/javascripts/AES.js')
+    script(src='/javascripts/jsencrypt.js')
+    script(src='/javascripts/chiffrement.js')
+    script(src='/javascripts/nouveauMessage.js')
+block content
+    .contenant
+    #liste_contacts
+    table
+      tbody
+        - each item in contacts
+          tr
+            td= item.contact_nom
+    br
+    p#utilisateurs= 'Liste des utilisateurs'
+    select#nomUtilisateur
+        each val in contacts
+            option(value=val.cleContact)= val.contact_nom
+    button#btnEnr Ajouter contact

@@ -87,6 +87,13 @@ router.get('/login', function(req, res, next) {
   res.render('login', { titre: 'Connexion' });
 });
 
+router.get('/contacts', requireLogin, function(req,res,next) {
+	var db = new sqlite3.Database('../database/Courriel.db');
+	getContactsForUser(req.session.user, function(data) { 
+	res.render('contacts', { titre: 'Liste des contacts', contacts: data, utilisateurs });
+  });
+});
+
 /* Sauvegarder courriel */
 router.post('/saveMessage', requireLogin, function(req, res, next) {
 	var msg = req.body
@@ -116,7 +123,6 @@ router.post('/saveMessage', requireLogin, function(req, res, next) {
 			
 	  });		
 	});
-	
 	
 });
 
@@ -152,6 +158,19 @@ function requireLogin(req, res, next)
   {
     res.redirect('/login?r=' + redURL);
   }
+}
+
+function getUtilisateurs(callback)
+{
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+		
+	  db.all("select clePublique, Nom from Utilisateurs", function(err, rows) {
+			db.close();
+			console.log(rows);
+			callback(rows);
+	  });		
+	});
 }
 
 function getContactsForUser(userKey, callback)
