@@ -88,12 +88,26 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/contacts', requireLogin, function(req,res,next) {
+        var lesContacts;
+	getContactsForUser(req.session.user, function(data) { 
+	  //premier callback les contacts sont prêts
+          lesContacts = data;
+          getUtilisateurs(function(lesUtilisateurs) {
+           //deuxième callback à l'intérieur du premier tout est prêt.
+            res.render('contacts', { titre: 'Liste des contacts', contacts: lesContacts, utilisateurs: lesUtilisateurs });
+         });
+      });
+});
+
+
+
+/*router.get('/contacts', requireLogin, function(req,res,next) {
 	var db = new sqlite3.Database('../database/Courriel.db');
 	getContactsForUser(req.session.user, function(data) { 
 	res.render('contacts', { titre: 'Liste des contacts', contacts: data });
   });
 });
-
+*/
 /* Sauvegarder courriel */
 router.post('/saveMessage', requireLogin, function(req, res, next) {
 	var msg = req.body

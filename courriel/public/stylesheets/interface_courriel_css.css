@@ -7,7 +7,7 @@ html {
 	padding:25px;
 	border: solid 1px;
 	border-color: rgb(72,89,89);
-	background: linear-gradient(to top right,rgb(72,89,89),rgb(159,177,177));
+	background: linear-gradient(to top,rgb(57,70,70),rgb(159,177,177));
 	color: white;
 	box-shadow: 5px 5px 5px gray;
 	text-shadow: 2px 1px black;
@@ -20,8 +20,9 @@ html {
 	float:left;
 	border-bottom: solid 1px;
 	border-left: solid 1px;
-	border-color: rgb(72,89,89);
-	background-color:silver;
+	border-right: solid 1px;
+	border-color: rgb(116,141,141);
+	background-color:rgb(233,233,233);
 	box-shadow: 5px 5px 5px gray;
 }
 
@@ -33,7 +34,7 @@ html {
 	float:left;
 	border-right: solid 1px;
 	border-bottom: solid 1px;
-	border-color: rgb(72,89,89);
+	border-color: rgb(116,141,141);
 	box-shadow: 5px 5px 5px gray;
 }
 

@@ -16,6 +16,6 @@ block content
     br
     p#utilisateurs= 'Liste des utilisateurs'
     select#nomUtilisateur
-        each val in contacts
-            option(value=val.cleContact)= val.contact_nom
+        each val in utilisateurs
+            option(value=val.clePublique)= val.Nom
     button#btnEnr Ajouter contact
