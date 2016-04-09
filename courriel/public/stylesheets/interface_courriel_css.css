@@ -97,3 +97,43 @@ table {
 	height: 300px;
 	resize: none;
 }
+
+#tableinbox {
+  width: 250px;
+  border-style: groove;
+  border-color: gray;
+  background-color: white;
+  overflow:hide;
+}
+
+.th1{
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	width:100px;
+	
+	
+}
+
+.th2{
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	width:80px;
+}
+.th3{
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	width: 120px;
+	text-overflow: ellipsis;
+}
+
+.td1{
+	width:100px;
+}
+.td3{
+	width: 120px;
+	text-overflow:ellipsis;
+}
+
