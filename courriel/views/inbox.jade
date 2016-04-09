@@ -1,18 +1,31 @@
 extends courrielTemplate
 block ressources
-  script(src='javascripts/jquery-2.2.1.min.js')
-  script(src='/javascripts/AES.js')
-  script(src='/javascripts/jsencrypt.js')
-  script(src='/javascripts/chiffrement.js')
+	script(src='javascripts/jquery-2.2.1.min.js')
+	script(src='/javascripts/AES.js')
+	script(src='/javascripts/jsencrypt.js')
+	script(src='/javascripts/chiffrement.js')
 block content
-  #boite_reception
-    table
-      tbody
-        each item in inbox
-          tr
-            td=  item.dateEnvoi
-          tr
-            td= item.message_de
-          tr
-            td= item.texte
-    br
+	#boite_reception
+		table#tableinbox
+			.head
+				th
+					.th1 Date
+				th
+					.th2 Expéditeur
+				th
+					.th3 Message
+				th
+					.th1
+			tr
+			tbody
+			each item, id_message in inbox
+				td
+					.td1= item.dateEnvoi
+				td
+					.td1= item.message_de
+				td
+					.td3= item.texte
+				td 
+					button.voirmessage Voir le message
+				tr#tr
+	br
