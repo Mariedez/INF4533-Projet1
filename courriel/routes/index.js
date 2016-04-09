@@ -164,7 +164,7 @@ function getUserInbox(userKey,callback)
 	var db = new sqlite3.Database('../database/Courriel.db');
 	db.serialize(function() {
 		
-	  db.all("select DateEnvoi, De, Texte from Boite_Courriel where CleA = ?", userKey, function(err, rows) {
+	  db.all("select dateEnvoi, message_de, texte from vue_message where cleA = ?", userKey, function(err, rows) {
 			db.close();
 			console.log(rows);
 			callback(rows);
