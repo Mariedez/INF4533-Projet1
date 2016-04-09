@@ -115,6 +115,26 @@ router.get('/contacts', requireLogin, function(req,res,next) {
       });
 });
 
+router.post('/saveContact', requireLogin, function(req,res,next) {
+	var nouvContact = req.body;
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+	  db.run('INSERT INTO Contacts (CleUtilisateur, CleContact) values (?, ?)', nouvContact.cleMoi, nouvContact.cleContact, function(err) {
+			db.close();
+			if (err)
+			{
+				console.log(err);
+				res.sendStatus(500);
+			}
+			else
+			{
+				res.sendStatus(200);
+			}
+	  });		
+	});
+});
+
+
 /* Fonction pour obtenir le nom de la personne qui s'est connectée*/
 function requireLogin(req, res, next)
 {
@@ -150,7 +170,7 @@ function getUtilisateurs(callback)
 	var db = new sqlite3.Database('../database/Courriel.db');
 	db.serialize(function() {
 		
-	  db.all("select clePublique, Nom from Utilisateurs", function(err, rows) {
+	  db.all("select ClePublique, Nom from Utilisateurs", function(err, rows) {
 			db.close();
 			console.log(rows);
 			callback(rows);
@@ -167,7 +187,6 @@ function getUserInbox(userKey,callback)
 	  db.all("select dateEnvoi, message_de, texte from vue_message where cleA = ?", userKey, function(err, rows) {
 			db.close();
 			console.log(rows);
-			callback(rows);
 			callback(rows);
 	  });		
 	});

@@ -2,9 +2,7 @@ extends courrielTemplate
 block ressources
     script(src='javascripts/jquery-2.2.1.min.js')
     script(src='/javascripts/AES.js')
-    script(src='/javascripts/jsencrypt.js')
-    script(src='/javascripts/chiffrement.js')
-    script(src='/javascripts/nouveauMessage.js')
+    script(src='/javascripts/nouveauContact.js')
 block content
     .contenant
     #liste_contacts
@@ -17,5 +15,5 @@ block content
     p#utilisateurs= 'Liste des utilisateurs'
     select#nomUtilisateur
         each val in utilisateurs
-            option(value=val.clePublique)= val.Nom
+            option(value=val.ClePublique)= val.Nom
     button#btnEnr Ajouter contact
