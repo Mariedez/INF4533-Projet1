@@ -83,6 +83,15 @@ router.get('/inbox', requireLogin, function(req, res, next) {
   });
 });
 
+router.get('/getContacts', requireLogin, function(req, res, next) {
+    getContactsForUser(req.session.user, function(data) { 
+          lesContacts = data;
+		  res.json(data);
+      });
+});
+
+
+
 var msg = {};
 /* Route pour voir un message */
 router.get('/message', requireLogin, isValidMessage, function(req, res, next) {

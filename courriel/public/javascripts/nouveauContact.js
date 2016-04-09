@@ -13,8 +13,26 @@ function enregistrerContact()
 				url: 'http://localhost:3000/saveContact', 
 				contentType: 'application/json', 
 				data: JSON.stringify(nouvContact),
-				statusCode: { 500: function() {alert("Une erreur s'est produite lors de l'enregistrement du contact.");}, 200: function() {alert("Contact ajouté avec succès!");} } 
+				statusCode: { 500: function() {alert("Une erreur s'est produite lors de l'enregistrement du contact.");}, 200: rechargerContact } 
 			});
+}
+
+function rechargerContact()
+{
+	alert("Contact ajouté avec succès!");
+	
+	//Va chercher la nouvelle liste de contacts du serveur pour mettre à jour la page.
+	$.get("http://localhost:3000/getContacts", function (data) {
+		var laTable = $('#liste_contacts tbody');
+		$(laTable).find('tr').remove();
+		
+		for (var i = 0; i < data.length; i++)
+		{
+			var leHtml = $(laTable).html();
+			$(laTable).html(leHtml + "<tr><td>"+ data[i].contact_nom + "</td></tr>");
+		}
+		
+	})
 }
 
 function getCookie(cname) {

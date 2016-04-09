@@ -6,12 +6,12 @@ block ressources
 block content
     .contenant
     #liste_contacts
-    table
-      tbody
-        - each item in contacts
-          tr
-            td= item.contact_nom
-    br
+      table
+        tbody
+          - each item in contacts
+            tr
+              td= item.contact_nom
+      br
     p#utilisateurs= 'Liste des utilisateurs'
     select#nomUtilisateur
         each val in utilisateurs
