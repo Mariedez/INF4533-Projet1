@@ -2,21 +2,20 @@ html {
 	font-family:Arial;
 }
 .Entete{
-	width:670px;
+	width:665px;
 	height:35px;
-	padding:25px;
+	padding: 25px 25px 25px 10px;
 	border: solid 1px;
 	border-color: rgb(72,89,89);
-	background: linear-gradient(to top,rgb(57,70,70),rgb(159,177,177));
+	background: linear-gradient(to top,rgb(15,94,119),rgb(22,143,184));
 	color: white;
 	box-shadow: 5px 5px 5px gray;
 	text-shadow: 2px 1px black;
 }
 
 .Tableau1 {
-	width:120px;
+	width:150px;
 	height:500px;
-	padding:25px;
 	float:left;
 	border-bottom: solid 1px;
 	border-left: solid 1px;
@@ -29,13 +28,18 @@ html {
 .Tableau2{
 	width:500px;
 	height:500px;
-	padding:25px;
+	padding-left:25px;
+	padding-right:25px;
 	background-color:rgb(233,233,233);
 	float:left;
 	border-right: solid 1px;
 	border-bottom: solid 1px;
 	border-color: rgb(116,141,141);
 	box-shadow: 5px 5px 5px gray;
+}
+
+a {
+	color=black;
 }
 
 .Titre {
@@ -47,8 +51,18 @@ html {
 }
 
 .Bouton {
-	width: 135px;
-	height: 25px;
+	width: 150px;
+	height: 60px;
+	border: none;
+	background-color: rgb(233,233,233);
+	text-align: left;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.Bouton:hover{
+	background-color: rgb(15,94,119);
+	color: white;
 }
 
 .Contenant {

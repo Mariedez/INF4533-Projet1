@@ -11,7 +11,7 @@ function saveCle(evt)
       r.onload = function(e) { 
 	    var contents = e.target.result;
         sessionStorage.setItem("cle",  contents);
-		alert("Fichier chargé avec succès");
+		/*alert("Fichier chargé avec succès");*/
       }
       r.readAsText(f);
     } else { 

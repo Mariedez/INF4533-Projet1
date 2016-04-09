@@ -8,28 +8,42 @@ router.get('/', function(req, res, next) {
   res.redirect('/login');
 });
 
-var msg = {};
+/* Page de login. */
+router.get('/login', function(req, res, next) {
+	console.log(__dirname);
+  res.render('login', { titre: 'Connexion' });
+});
 
-/* Route pour voir un message */
-router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
-
+/* Route pour se connecter. */
+router.post('/connexion', function(req, res, next) {
+	
 	var db = new sqlite3.Database('../database/Courriel.db');
-	var id = getParameterByName("id", req.url);
+	var sess = req.session;
+	var ref = req.headers['referer'];
 	
 	db.serialize(function() {
-		
-	  db.get('select dateEnvoi, cleSymDe, cleSymA, message_de, message_a, texte from vue_message where id_message = ?',id, function(err, row) {
-
-			msg.cleDe = row.cleSymDe;
-			msg.cleA = row.cleSymA;
-			msg.body = row.texte;
-			msg.de = row.message_de;
-			msg.a = row.message_a;
-			msg.date = row.dateEnvoi;
-			
+	  db.get("select nom, clePublique from utilisateurs where nom = ? and password = ?", req.body.username, req.body.password, function(err, row) {
 			db.close();
-			
-			res.render('message', { message: msg, titre: 'Message reçu' });
+			if (row == undefined)
+			{
+				res.render('login', { titre: 'Connexion', erreur: "Mauvais nom d'utilisateur ou mot de passe." })
+			}
+			else
+			{
+				console.log('connexion ok');
+				sess.user = row.ClePublique;
+				res.cookie('moiCle', row.ClePublique); 
+				res.cookie('moi', row.Nom);
+				var rURL = getParameterByName('r', ref);
+				if (rURL)
+				{
+					res.redirect('/' + rURL);
+				}
+				else
+				{
+					res.redirect('/contacts');
+				}	
+			}
 	  });		
 	});
 });
@@ -41,89 +55,15 @@ router.get('/nouveauMessage', requireLogin, function(req, res, next) {
   });
 });
 
-/* Route pour se connecter. */
-router.post('/connexion', function(req, res, next) {
-	
-	var db = new sqlite3.Database('../database/Courriel.db');
-	var sess = req.session;
-	var ref = req.headers['referer'];
-	
-	db.serialize(function() {
-		
-	  db.get("select nom, clePublique from utilisateurs where nom = ? and password = ?", req.body.username, req.body.password, function(err, row) {
-
-			db.close();
-	  
-			if (row == undefined)
-			{
-				res.render('login', { titre: 'Connexion', erreur: "Mauvais nom d'utilisateur ou mot de passe." })
-			}
-			else
-			{
-				console.log('connexion ok');
-				sess.user = row.ClePublique;
-				res.cookie('moiCle', row.ClePublique); 
-				res.cookie('moi', row.Nom);
-				
-				var rURL = getParameterByName('r', ref);
-				
-				if (rURL)
-				{
-					res.redirect('/' + rURL);
-				}
-				else
-				{
-					res.redirect('/message');
-				}	
-			}
-	  });		
-	});
-	
-});
-
-/* Page de login. */
-router.get('/login', function(req, res, next) {
-	console.log(__dirname);
-  res.render('login', { titre: 'Connexion' });
-});
-
-router.get('/contacts', requireLogin, function(req,res,next) {
-        var lesContacts;
-	getContactsForUser(req.session.user, function(data) { 
-	  //premier callback les contacts sont prêts
-          lesContacts = data;
-          getUtilisateurs(function(lesUtilisateurs) {
-           //deuxième callback à l'intérieur du premier tout est prêt.
-            res.render('contacts', { titre: 'Liste des contacts', contacts: lesContacts, utilisateurs: lesUtilisateurs });
-         });
-      });
-});
-
-
-
-/*router.get('/contacts', requireLogin, function(req,res,next) {
-	var db = new sqlite3.Database('../database/Courriel.db');
-	getContactsForUser(req.session.user, function(data) { 
-	res.render('contacts', { titre: 'Liste des contacts', contacts: data });
-  });
-});
-*/
-/* Sauvegarder courriel */
+/* Route pour sauvegarder courriel */
 router.post('/saveMessage', requireLogin, function(req, res, next) {
 	var msg = req.body
 	var now = new Date();
 	now = formatDate(now);
-	
-
-	
 	var db = new sqlite3.Database('../database/Courriel.db');
-	
 	db.serialize(function() {
-		
 	  db.run('INSERT INTO messages (CleDe, CleA, DateEnvoi, Texte, CleSymDe, CleSymA) values (?, ?, ?, ?, ?, ?)', msg.cleDe, msg.cleA, now, msg.body, msg.cleSymDe, msg.cleSymA , function(err) {
-
 			db.close();
-	  
 			if (err)
 			{
 				console.log(err);
@@ -133,28 +73,60 @@ router.post('/saveMessage', requireLogin, function(req, res, next) {
 			{
 				res.sendStatus(200);
 			}
-			
-			
 	  });		
 	});
-	
 });
 
+router.get('/inbox', requireLogin, function(req, res, next) {
+    getUserInbox(req.session.user, function(data){
+      res.render('inbox', { titre: 'Boîte de reception', inbox: data });
+  });
+});
+
+var msg = {};
+/* Route pour voir un message */
+router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
+	var db = new sqlite3.Database('../database/Courriel.db');
+	var id = getParameterByName("id", req.url);
+	db.serialize(function() {
+	  db.get('select dateEnvoi, cleSymDe, cleSymA, message_de, message_a, texte from vue_message where id_message = ?',id, function(err, row) {
+			msg.cleDe = row.cleSymDe;
+			msg.cleA = row.cleSymA;
+			msg.body = row.texte;
+			msg.de = row.message_de;
+			msg.a = row.message_a;
+			msg.date = row.dateEnvoi;
+			db.close();
+			res.render('message', { message: msg, titre: 'Message reçu' });
+	  });		
+	});
+});
+
+/* Route pour voir les contacts */
+router.get('/contacts', requireLogin, function(req,res,next) {
+        var lesContacts;
+	getContactsForUser(req.session.user, function(data) { 
+	  //premier callback les contacts sont prêts
+          lesContacts = data;
+          getUtilisateurs(function(lesUtilisateurs) {
+           //deuxième callback à l'intérieur du premier tout est prêt.
+            res.render('contacts', { titre: 'Liste des contacts' , contacts: lesContacts, utilisateurs: lesUtilisateurs });
+         });
+      });
+});
+
+/* Fonction pour obtenir le nom de la personne qui s'est connectée*/
 function requireLogin(req, res, next)
 {
-	
 	var sess = req.session;
 	var redURL = req.url.substr(1, req.url.length - 1);
 	
   if (sess.user) 
 	{
 		var db = new sqlite3.Database('../database/Courriel.db');
-		
 		db.serialize(function() {
 			db.get("select nom from utilisateurs where clePublique = ?", sess.user, function(err, row) {
-
 					db.close();
-			
 					if (row == undefined)
 					{
 						res.redirect('/login?r=' + redURL);
@@ -163,10 +135,8 @@ function requireLogin(req, res, next)
 					{
 						next();
 					}	
-					
 			  });
 		});
-
   } 
   else 
   {
@@ -174,6 +144,7 @@ function requireLogin(req, res, next)
   }
 }
 
+/* Fonction pour obtenir la liste de tous les utilisateurs */
 function getUtilisateurs(callback)
 {
 	var db = new sqlite3.Database('../database/Courriel.db');
@@ -187,6 +158,24 @@ function getUtilisateurs(callback)
 	});
 }
 
+/* Fonction pour obtenir la liste des messages reçus pour un utilisateur donné*/
+function getUserInbox(userKey,callback)
+{
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+		
+	  db.all("select DateEnvoi, De, Texte from Boite_Courriel where CleA = ?", userKey, function(err, rows) {
+			db.close();
+			console.log(rows);
+			callback(rows);
+			callback(rows);
+	  });		
+	});
+}
+
+
+
+/* Fonction pour obtenir la liste des contacts d'un utilisateur donné*/
 function getContactsForUser(userKey, callback)
 {
 	var db = new sqlite3.Database('../database/Courriel.db');
