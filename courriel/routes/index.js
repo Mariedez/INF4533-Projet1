@@ -41,7 +41,7 @@ router.post('/connexion', function(req, res, next) {
 				}
 				else
 				{
-					res.redirect('/contacts');
+					res.redirect('/inbox');
 				}	
 			}
 	  });		
@@ -83,6 +83,12 @@ router.get('/inbox', requireLogin, function(req, res, next) {
   });
 });
 
+router.get('/outbox', requireLogin, function(req, res, next) {
+    getUserOutbox(req.session.user, function(data){
+      res.render('outbox', { titre: 'Messages envoyés', outbox: data });
+  });
+});
+
 router.get('/getContacts', requireLogin, function(req, res, next) {
     getContactsForUser(req.session.user, function(data) { 
           lesContacts = data;
@@ -111,15 +117,17 @@ router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
 	});
 });
 
-/* Route pour voir les contacts */
+
+/* Route pour voir les contacts*/
 router.get('/contacts', requireLogin, function(req,res,next) {
-        var lesContacts;
-	getContactsForUser(req.session.user, function(data) { 
-	  //premier callback les contacts sont prêts
+       var lesContacts;
+	   getContactsForUser(req.session.user, function(data) {
+	      //premier callback les contacts sont prêts
           lesContacts = data;
           getUtilisateurs(function(lesUtilisateurs) {
            //deuxième callback à l'intérieur du premier tout est prêt.
-            res.render('contacts', { titre: 'Liste des contacts' , contacts: lesContacts, utilisateurs: lesUtilisateurs });
+		   titre= 'Liste des contacts ';
+            res.render('contacts', { titre: titre , contacts: lesContacts, utilisateurs: lesUtilisateurs });
          });
       });
 });
@@ -149,7 +157,7 @@ function requireLogin(req, res, next)
 {
 	var sess = req.session;
 	var redURL = req.url.substr(1, req.url.length - 1);
-	
+	var nom;
   if (sess.user) 
 	{
 		var db = new sqlite3.Database('../database/Courriel.db');
@@ -201,6 +209,19 @@ function getUserInbox(userKey,callback)
 	});
 }
 
+/* Fonction pour obtenir la liste des messages envoyés par un utilisateur donné*/
+function getUserOutbox(userKey,callback)
+{
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+		
+	  db.all("select dateEnvoi, message_a, texte, id_message from vue_message where cleDe = ?", userKey, function(err, rows) {
+			db.close();
+			console.log(rows);
+			callback(rows);
+	  });		
+	});
+}
 
 
 /* Fonction pour obtenir la liste des contacts d'un utilisateur donné*/

@@ -1,0 +1,31 @@
+extends courrielTemplate
+block ressources
+	script(src='javascripts/jquery-2.2.1.min.js')
+	script(src='/javascripts/AES.js')
+	script(src='/javascripts/jsencrypt.js')
+	script(src='/javascripts/chiffrement.js')
+block content
+	#boite_envoi
+		table#tableoutbox
+			.head
+				th
+					.th1 Date
+				th
+					.th2 Envoyé à
+				th
+					.th3 Message
+				th
+					.th1 
+			tr
+			tbody
+			each item, id_message in outbox
+				td
+					.td1= item.dateEnvoi
+				td
+					.td1= item.message_a
+				td
+					.td3= item.texte
+				td 
+					button.voirmessage Voir le message
+				tr#tr
+	br

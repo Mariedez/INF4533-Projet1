@@ -11,17 +11,10 @@ html
       h1.Titre Boite de courriel
     .Tableau1
       input.Bouton(type='button', value='Nouveau message', id='nouveau message', onclick='nouvMessage();')
-      br
-      br
       input.Bouton(type='button', value='Boite de reception', id='boite de reception', onclick='afficheInbox();')
-      br
-      br
       input.Bouton(type='button', value='Messages envoyes', id='messages envoyes', onclick='afficheOutbox();')
-      br
-      br
       input.Bouton(type='button', value='Liste des contacts', id='liste des contacts', onclick='afficheYp();')
-      br
-      br
     .Tableau2
-      p#TitreCible.TitreTableau2= titre
+      p#TitreCible.TitreTableau2= titre 
+       #NomUtilisateur=nomUtil
       block content

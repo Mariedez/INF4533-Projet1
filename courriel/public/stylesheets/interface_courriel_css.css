@@ -1,5 +1,6 @@
 html {
 	font-family:Arial;
+	font-size: 14px;
 }
 .Entete{
 	width:665px;
@@ -38,10 +39,6 @@ html {
 	box-shadow: 5px 5px 5px gray;
 }
 
-a {
-	color=black;
-}
-
 .Titre {
 	font-size: 200%;
 }
@@ -49,13 +46,18 @@ a {
 .TitreTableau2{
 	font-size: 150%;
 }
-
-.Bouton {
+.controlLabel{
+    width:120px;
+    display: inline-block;
+}
+.Bouton{
 	width: 150px;
 	height: 60px;
 	border: none;
+	border-bottom: solid 1px;
+	border-color: rgb(116,141,141);
 	background-color: rgb(233,233,233);
-	text-align: left;
+	text-align: center;
 	cursor: pointer;
 	font-size: 14px;
 }
@@ -65,9 +67,30 @@ a {
 	color: white;
 }
 
+button{
+	height: 30px;
+	border: solid 1px;
+	border-color: rgb(116,141,141);
+	background-color: rgb(233,233,233);
+	text-align: left;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+button.voirmessage{
+	height: 25px;
+	width:120px;
+	background-color: white;
+}
+
+button:hover{
+	background-color: rgb(15,94,119);
+	color: white;
+}
+
+
 .Contenant {
   height: 400px;
-  width: 100%;
   overflow: auto;
 }
 
@@ -76,6 +99,14 @@ table {
   border-style: groove;
   border-color: gray;
   background-color: white;
+  font-size: 14px;
+}
+
+select {
+	width: 200px;
+	height: 30px;
+	font-size: 14px;
+	cursor: pointer;
 }
 
 .TextBox{
@@ -106,25 +137,21 @@ table {
   overflow:hide;
 }
 
-.th1{
-	padding: 8px;
+th{
+	height: 20px;
+	padding: 8px 8px 8px 0px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
+}
+
+.th1{
 	width:100px;
-	
-	
 }
 
 .th2{
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
 	width:80px;
 }
 .th3{
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
 	width: 120px;
 	text-overflow: ellipsis;
 }
