@@ -153,14 +153,20 @@ th{
 }
 .th3{
 	width: 120px;
-	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .td1{
 	width:100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .td3{
 	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow:ellipsis;
 }
 
