@@ -1,28 +1,42 @@
+html {
+	font-family:Arial;
+	font-size: 14px;
+}
 .Entete{
-	width:707px;
+	width:665px;
 	height:35px;
-	background-color:silver;
-	padding:35px;
-	border:solid 1px black;
+	padding: 25px 25px 25px 10px;
+	border: solid 1px;
+	border-color: rgb(72,89,89);
+	background: linear-gradient(to top,rgb(15,94,119),rgb(22,143,184));
+	color: white;
+	box-shadow: 5px 5px 5px gray;
+	text-shadow: 2px 1px black;
 }
 
 .Tableau1 {
-	width:135px;
+	width:150px;
 	height:500px;
-	background-color:silver;
 	float:left;
-	border:solid 1px black;
-	padding:35px;
+	border-bottom: solid 1px;
+	border-left: solid 1px;
+	border-right: solid 1px;
+	border-color: rgb(116,141,141);
+	background-color:rgb(233,233,233);
+	box-shadow: 5px 5px 5px gray;
 }
 
 .Tableau2{
 	width:500px;
 	height:500px;
-	background-color:silver;
+	padding-left:25px;
+	padding-right:25px;
+	background-color:rgb(233,233,233);
 	float:left;
-	border:solid 1px black;
-	padding:35px;
-	font-family:Arial;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+	border-color: rgb(116,141,141);
+	box-shadow: 5px 5px 5px gray;
 }
 
 .Titre {
@@ -32,36 +46,127 @@
 .TitreTableau2{
 	font-size: 150%;
 }
-
-.Bouton {
-	width: 135px;
-	height: 25px;
+.controlLabel{
+    width:120px;
+    display: inline-block;
 }
+.Bouton{
+	width: 150px;
+	height: 60px;
+	border: none;
+	border-bottom: solid 1px;
+	border-color: rgb(116,141,141);
+	background-color: rgb(233,233,233);
+	text-align: center;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.Bouton:hover{
+	background-color: rgb(15,94,119);
+	color: white;
+}
+
+button{
+	height: 30px;
+	border: solid 1px;
+	border-color: rgb(116,141,141);
+	background-color: rgb(233,233,233);
+	text-align: left;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+button.voirmessage{
+	height: 25px;
+	width:120px;
+	background-color: white;
+}
+
+button:hover{
+	background-color: rgb(15,94,119);
+	color: white;
+}
+
 
 .Contenant {
   height: 400px;
-  width: 100%;
   overflow: auto;
 }
 
-.Contenant table {
-  width: 100%;
+table {
+  width: 200px;
+  border-style: groove;
+  border-color: gray;
+  background-color: white;
+  font-size: 14px;
 }
 
-.contenant table th {
-	font-weight: bold;
-}
-.Contenant table, th, td {
-   border: 1px solid black;
+select {
+	width: 200px;
+	height: 30px;
+	font-size: 14px;
+	cursor: pointer;
 }
 
 .TextBox{
   width:270px;
+
 }
 .TextBox option{
   width:270px;
+
 }
 #mes {
 	font-style: italic;
 	padding-left = 15px;
 }
+
+#txtMsg
+{
+	width: 495px;
+	height: 300px;
+	resize: none;
+}
+
+#tableinbox {
+  width: 250px;
+  border-style: groove;
+  border-color: gray;
+  background-color: white;
+  overflow:hide;
+}
+
+th{
+	height: 20px;
+	padding: 8px 8px 8px 0px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.th1{
+	width:100px;
+}
+
+.th2{
+	width:80px;
+}
+.th3{
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.td1{
+	width:100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.td3{
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+
