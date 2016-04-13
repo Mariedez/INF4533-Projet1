@@ -21,6 +21,13 @@ $(document).ready(
 	}
 )
 
+function ouvrirMessage(id_message)
+{
+	window.location = "http://localhost:3000/message?id=" + id_message;
+	
+}
+
+
 function chargeClePrive()
 {
 	var cle = sessionStorage.getItem('cle');

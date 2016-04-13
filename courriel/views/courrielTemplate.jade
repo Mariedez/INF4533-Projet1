@@ -7,13 +7,13 @@ html
     block ressources
   body
     .Entete
-      img(src='/images/uqo-logo.png', alt='uqo', width='200', height='50', align='right', filter='alpha(opacity=40)')
-      h1.Titre Boite de courriel
+      img(src='/images/uqo-logo.png', alt='uqo', width='150', height='50', align='right', filter='alpha(opacity=40)')
+      h1.Titre Boîte de courriel
     .Tableau1
-      input.Bouton(type='button', value='Nouveau message', id='nouveau message', onclick='nouvMessage();')
-      input.Bouton(type='button', value='Boite de reception', id='boite de reception', onclick='afficheInbox();')
-      input.Bouton(type='button', value='Messages envoyes', id='messages envoyes', onclick='afficheOutbox();')
-      input.Bouton(type='button', value='Liste des contacts', id='liste des contacts', onclick='afficheYp();')
+      input.BoutonTemplate(type='button', value='Nouveau message', id='nouveau message', onclick='nouvMessage();')
+      input.BoutonTemplate(type='button', value='Boîte de réception', id='boite de reception', onclick='afficheInbox();')
+      input.BoutonTemplate(type='button', value='Messages envoyés', id='messages envoyes', onclick='afficheOutbox();')
+      input.BoutonTemplate(type='button', value='Liste des contacts', id='liste des contacts', onclick='afficheYp();')
     .Tableau2
       p#TitreCible.TitreTableau2= titre 
        #NomUtilisateur=nomUtil

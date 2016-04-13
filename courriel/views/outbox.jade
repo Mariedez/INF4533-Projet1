@@ -4,6 +4,7 @@ block ressources
 	script(src='/javascripts/AES.js')
 	script(src='/javascripts/jsencrypt.js')
 	script(src='/javascripts/chiffrement.js')
+	script(src='/javascripts/message.js')
 block content
 	#boite_envoi
 		table#tableoutbox
@@ -18,7 +19,7 @@ block content
 					.th1 
 			tr
 			tbody
-			each item, id_message in outbox
+			each item in outbox
 				td
 					.td1= item.dateEnvoi
 				td
@@ -26,6 +27,7 @@ block content
 				td
 					.td3= item.texte
 				td 
-					button.voirmessage Voir le message
+					- var id_mes=''
+					input.BoutonMessage(type='button', value='Voir le message', id=item.id_message, onclick='ouvrirMessage(this.id);')
 				tr#tr
 	br

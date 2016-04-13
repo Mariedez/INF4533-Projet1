@@ -50,7 +50,7 @@ html {
     width:120px;
     display: inline-block;
 }
-.Bouton{
+.BoutonTemplate{
 	width: 150px;
 	height: 60px;
 	border: none;
@@ -62,12 +62,12 @@ html {
 	font-size: 14px;
 }
 
-.Bouton:hover{
+.BoutonTemplate:hover{
 	background-color: rgb(15,94,119);
 	color: white;
 }
 
-button{
+.BoutonBloc{
 	height: 30px;
 	border: solid 1px;
 	border-color: rgb(116,141,141);
@@ -77,17 +77,16 @@ button{
 	font-size: 14px;
 }
 
-button.voirmessage{
-	height: 25px;
-	width:120px;
-	background-color: white;
-}
-
-button:hover{
+.BoutonBloc:hover{
 	background-color: rgb(15,94,119);
 	color: white;
 }
 
+.BoutonMessage{
+	height: 25px;
+	width: 120px;
+	background-color: white;
+}
 
 .Contenant {
   height: 400px;
@@ -153,14 +152,20 @@ th{
 }
 .th3{
 	width: 120px;
-	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .td1{
 	width:100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .td3{
 	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow:ellipsis;
 }
 

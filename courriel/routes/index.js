@@ -79,7 +79,7 @@ router.post('/saveMessage', requireLogin, function(req, res, next) {
 
 router.get('/inbox', requireLogin, function(req, res, next) {
     getUserInbox(req.session.user, function(data){
-      res.render('inbox', { titre: 'Boîte de reception', inbox: data });
+      res.render('inbox', { titre: 'Boîte de réception', inbox: data });
   });
 });
 
