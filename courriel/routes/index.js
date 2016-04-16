@@ -122,6 +122,17 @@ router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
 	});
 });
 
+/* Route pour voir la liste des utilisateurs*/
+router.get('/utilisateurs', requireLogin, function(req,res,next) {
+       var lesContacts;
+	   var CleUtil = req.session.user;
+	   console.log(CleUtil);
+	   console.log("on est dans la liste");
+     getTousUtilisateurs(req.session.user, function(data) {
+       lesUtilisateurs = data;
+       res.render('utilisateurs', { titre: 'Liste des utilisateurs', utilisateurs: lesUtilisateurs });
+     });
+});
 
 /* Route pour voir la liste des contacts*/
 router.get('/contacts', requireLogin, function(req,res,next) {
@@ -137,6 +148,27 @@ router.get('/contacts', requireLogin, function(req,res,next) {
          });
       });
 });
+
+/* Route pour enregistrer un nouveau utilisateur dans la base de données*/
+router.post('/saveUtilisateur', requireLogin, function(req,res,next) {
+	var nouvUtilisateur = req.body;
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+	  db.run('INSERT INTO utilisateurs (clePublique, Nom, Password) values (?, ?, ?)', nouvUtilisateur.cle, nouvUtilisateur.nom, nouvUtilisateur.password , function(err) {
+			db.close();
+			if (err)
+			{
+				console.log(err);
+				res.sendStatus(500);
+			}
+			else
+			{
+				res.sendStatus(200);
+			}
+	  });
+	});
+});
+
 
 /* Route pour enregistrer un nouveau contact dans la base de données*/
 router.post('/saveContact', requireLogin, function(req,res,next) {
@@ -231,6 +263,23 @@ function getContactsForUser(userKey, callback)
 
 	  db.all("select cleContact, contact_nom from liste_contacts where cleUtilisateur = ?", userKey, function(err, rows) {
 			db.close();
+			console.log(rows);
+			callback(rows);
+	  });
+	});
+}
+
+/* Fonction pour obtenir la liste de tous les utilisateurs.*/
+function getTousUtilisateurs(userKey,callback)
+{
+	if (!userKey)
+		return false;
+
+	var db = new sqlite3.Database('../database/Courriel.db');
+	db.serialize(function() {
+	   db.all("select ClePublique, Nom from Utilisateurs ", function(err, rows) {
+			db.close();
+			console.log('Ok voici la liste');
 			console.log(rows);
 			callback(rows);
 	  });
