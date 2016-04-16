@@ -1,0 +1,28 @@
+extends courrielTemplate
+block ressources
+    script(src='javascripts/jquery-2.2.1.min.js')
+    script(src='/javascripts/AES.js')
+    script(src='/javascripts/utilisateurs.js')
+block content
+    .contenant
+    #liste_utilisateurs
+      table
+        tbody
+          - each item in utilisateurs
+            tr
+              td(id=item.Nom)= item.Nom
+      br
+    br
+    div
+      p#err(style='color:red;')
+      label.controlLabel(for='usrnm') Nom d'utilisateur:
+      input#usrnm(type='text', name='username', placeholder='Utilisateur')
+      br
+      label.controlLabel(for='pswd') Mot de passe:
+      input#pswd(type='password', name='password', placeholder='Mot de passe')
+      br
+      label.controlLabel(for='cpswd') Confirmer:
+      input#cpswd(type='password', name='password', placeholder='Mot de passe')
+      br
+      br
+      button.BoutonBloc#btnEnr Ajouter utilisateur
