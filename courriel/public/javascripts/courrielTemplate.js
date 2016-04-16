@@ -1,4 +1,4 @@
-function nouvMessage() 
+function nouvMessage()
 {
 	window.location = "http://localhost:3000/nouveauMessage";
 }
@@ -16,4 +16,9 @@ function afficheOutbox()
 function afficheYp()
 {
 	window.location = "http://localhost:3000/contacts";
+}
+
+function afficheUtilisateurs()
+{
+  window.location = "http://localhost:3000/utilisateurs";
 }
