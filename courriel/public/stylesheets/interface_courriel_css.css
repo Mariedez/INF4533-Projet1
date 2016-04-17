@@ -69,10 +69,11 @@ html {
 
 .BoutonBloc{
 	height: 30px;
+	width: 120px;
 	border: solid 1px;
 	border-color: rgb(116,141,141);
 	background-color: rgb(233,233,233);
-	text-align: left;
+	text-align: center;
 	cursor: pointer;
 	font-size: 14px;
 }

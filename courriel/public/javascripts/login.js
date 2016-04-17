@@ -19,7 +19,10 @@ function saveCle(evt)
     }
 }
 
-
+function afficheUtilisateurs()
+{
+  window.location = "http://localhost:3000/utilisateurs";
+}
 
 function validateForm()
 {
@@ -47,3 +50,6 @@ function validateForm()
 		return true;
 	}
 }
+
+
+

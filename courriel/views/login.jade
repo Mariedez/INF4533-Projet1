@@ -2,6 +2,7 @@ extends courrielTemplate
 block ressources
       script(src='javascripts/jquery-2.2.1.min.js')
       script(src='javascripts/login.js')
+      script(src='javascripts/generateCle.js')
 block content
       label(for='file') Fichier de clé privée: 
         input#file(type='file' name='file')
@@ -16,4 +17,11 @@ block content
           input#pswd(type='password', name='password', placeholder='Password')
           br
           br
-          input(type='submit', data-inline='true', value='Connexion')
+          input.BoutonBloc(type='submit', data-inline='true', value='Connexion')
+          br
+          br
+          label.TitreTableau2(for='nouvelUtil') Nouvel utilisateur
+          br
+          br
+          input.BoutonBloc(type='button', value='S\'inscrire', id='utilisateurs', onclick='afficheUtilisateurs();')
+

@@ -123,12 +123,12 @@ router.get('/message', requireLogin, isValidMessage, function(req, res, next) {
 });
 
 /* Route pour voir la liste des utilisateurs*/
-router.get('/utilisateurs', requireLogin, function(req,res,next) {
+router.get('/utilisateurs', function(req,res,next) {
        var lesContacts;
 	   var CleUtil = req.session.user;
 	   console.log(CleUtil);
 	   console.log("on est dans la liste");
-     getTousUtilisateurs(req.session.user, function(data) {
+       getTousUtilisateurs(function(data) {
        lesUtilisateurs = data;
        res.render('utilisateurs', { titre: 'Liste des utilisateurs', utilisateurs: lesUtilisateurs });
      });
@@ -150,7 +150,7 @@ router.get('/contacts', requireLogin, function(req,res,next) {
 });
 
 /* Route pour enregistrer un nouveau utilisateur dans la base de données*/
-router.post('/saveUtilisateur', requireLogin, function(req,res,next) {
+router.post('/saveUtilisateur', function(req,res,next) {
 	var nouvUtilisateur = req.body;
 	var db = new sqlite3.Database('../database/Courriel.db');
 	db.serialize(function() {
@@ -270,11 +270,8 @@ function getContactsForUser(userKey, callback)
 }
 
 /* Fonction pour obtenir la liste de tous les utilisateurs.*/
-function getTousUtilisateurs(userKey,callback)
+function getTousUtilisateurs(callback)
 {
-	if (!userKey)
-		return false;
-
 	var db = new sqlite3.Database('../database/Courriel.db');
 	db.serialize(function() {
 	   db.all("select ClePublique, Nom from Utilisateurs ", function(err, rows) {

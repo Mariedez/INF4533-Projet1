@@ -6,7 +6,6 @@ function envoyerMessage()
 {
 	var message = $('#txtMsg').val();
 	var destiCle = $('#selectTo option:selected').val();
-	alert(destiCle);
 	var cleSym = genereCleSym();
 	var sourceCle = decodeURIComponent(getCookie('moiCle'));
 	
